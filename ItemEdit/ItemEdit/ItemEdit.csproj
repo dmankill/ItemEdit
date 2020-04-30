@@ -55,6 +55,7 @@
     <Compile Include="Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\GameConfig.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ItemTranslater.cs" />
     <Compile Include="Models\ListBoxItem.cs" />

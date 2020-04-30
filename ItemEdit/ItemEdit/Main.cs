@@ -28,6 +28,8 @@ namespace ItemEdit
         private List<string> soundList = new List<string>();
         private Dictionary<string, string> transCh = new Dictionary<string, string>();
         private string transPath = "";
+        private string configPath = "";
+        private GameConfig gameConfig;
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -36,6 +38,7 @@ namespace ItemEdit
             redo:
             path = System.Environment.CurrentDirectory + @"\user\mods\EmuTarkov-AllItemsExamined-1.0.0\db\items";
             transPath = System.Environment.CurrentDirectory + @"\user\mods\EmuTarkov-LocaleCh-1.0.0\db\locales\ch\templates";
+            configPath = System.Environment.CurrentDirectory + @"\user\configs";
             if (!Directory.Exists(path))
             {
                 if (DialogResult.OK == fbd.ShowDialog())
@@ -43,6 +46,7 @@ namespace ItemEdit
                     string basepath = fbd.SelectedPath;
                     path = Path.Combine(basepath, @"user\mods\EmuTarkov-AllItemsExamined-1.0.0\db\items");
                     transPath = Path.Combine(basepath, @"user\mods\EmuTarkov-LocaleCh-1.0.0\db\locales\ch\templates");
+                    configPath = Path.Combine(basepath, @"user\configs");
                 }
             }
 
@@ -73,6 +77,14 @@ namespace ItemEdit
             comboBox1.BeginUpdate();
             comboBox1.Items.AddRange(soundList.ToArray());
             comboBox1.EndUpdate();
+            if (File.Exists(configPath + @"\gameplay.json"))
+            {
+                string gameConfigString = File.ReadAllText(configPath + @"\gameplay.json");
+                gameConfig = JsonConvert.DeserializeObject<GameConfig>(gameConfigString);
+                NUDUsec.Value = gameConfig.bots.pmcUsecChance;
+                NUDpmc.Value = gameConfig.bots.pmcSpawnChance;
+            }
+            
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -188,6 +200,15 @@ namespace ItemEdit
                 listBox1.DisplayMember = "Text";
                 listBox1.EndUpdate();
             }
+        }
+
+        private void btnSaveBOTRefPr_Click(object sender, EventArgs e)
+        {
+            gameConfig.bots.pmcUsecChance = (int) NUDUsec.Value;
+            gameConfig.bots.pmcSpawnChance = (int) NUDpmc.Value;
+            string gameConfigString = JsonConvert.SerializeObject(gameConfig, Formatting.Indented);
+            File.WriteAllText(configPath + @"\gameplay.json", gameConfigString);
+            
         }
     }
 }
