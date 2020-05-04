@@ -8,18 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace web
+namespace ItemEdit
 {
-    public partial class Form1 : Form
+    public partial class ChageStateForm : Form
     {
-        public Form1()
+        public ChageStateForm()
         {
             InitializeComponent();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

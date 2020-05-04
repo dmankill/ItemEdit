@@ -61,12 +61,30 @@ namespace ItemEdit.Properties {
         }
         
         /// <summary>
+        ///   查找类似  的本地化字符串。
+        /// </summary>
+        internal static string cb_Account {
+            get {
+                return ResourceManager.GetString("cb_Account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似于 (图标) 的 System.Drawing.Icon 类型的本地化资源。
         /// </summary>
         internal static System.Drawing.Icon icon {
             get {
                 object obj = ResourceManager.GetObject("icon", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Account 的本地化字符串。
+        /// </summary>
+        internal static string lbl_Account {
+            get {
+                return ResourceManager.GetString("lbl_Account", resourceCulture);
             }
         }
     }
