@@ -203,7 +203,7 @@ namespace ItemEdit.Models.profiles
 
     public class Upd
     {
-        public int? StackObjectsCount { get; set; }
+        public float? StackObjectsCount { get; set; }
         public Tag Tag { get; set; }
         public Repairable Repairable { get; set; }
         public Firemode FireMode { get; set; }
