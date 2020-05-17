@@ -605,8 +605,8 @@ namespace ItemEdit
                             var jo = itemObj["_props"] as JObject;
                             jo["StackMaxSize"] = max;
                             itemObj["_props"] = jo;
-                            tmpCtx = JsonConvert.SerializeObject(itemObj);
-                            File.WriteAllText(tmp, tmpCtx, Encoding.UTF8);
+                            tmpCtx = JsonConvert.SerializeObject(itemObj, Formatting.Indented);
+                            File.WriteAllText(tmp, tmpCtx, new UTF8Encoding(false));
 
                         }
 
