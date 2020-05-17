@@ -12,6 +12,7 @@ using ItemEdit.Models;
 using ItemEdit.Models.profiles;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
+using Newtonsoft.Json.Linq;
 using Item = ItemEdit.Models.Item;
 using Quest = ItemEdit.Models.Quest;
 
@@ -38,20 +39,34 @@ namespace ItemEdit
         private string tranquestpath = @"user\mods\EmuTarkov-LocaleCh-1.0.0\db\locales\ch\quest";
         private string enquesttransPath = @"db\locales\en\quest";
         private string orgLocalePath = @"dev\input\prod.escapefromtarkov.com.client.locale.ch.txt";
+
+        private string moddir = @"user\mods\";
         private PropLocale propLocale;
         private Dictionary<string, Character> charList = new Dictionary<string, Character>(10);
         private Dictionary<string, Quest> questdic_ch = new Dictionary<string, Quest>();
         private Dictionary<string, Quest> questdic_en = new Dictionary<string, Quest>();
-
+        private Dictionary<string, ModsConfigJson> mods = new Dictionary<string, ModsConfigJson>();
+        private SysConfig sysConfig;
         private void Form1_Load(object sender, EventArgs e)
         {
+            if (File.Exists("config.json"))
+            {
+                var conf = File.ReadAllText("config.json");
+                sysConfig = JsonConvert.DeserializeObject<SysConfig>(conf);
+                basepath = sysConfig.DefaultPath;
+            }
+            else
+            {
+                sysConfig = new SysConfig();
+            }
+            
             var fbd = new FolderBrowserDialog();
 
             redo:
-            path = System.Environment.CurrentDirectory + @"\user\mods\EmuTarkov-AllItemsExamined-1.0.0\db\items";
-            transPath = System.Environment.CurrentDirectory +
-                        @"\user\mods\EmuTarkov-LocaleCh-1.0.0\db\locales\ch\templates";
-            configPath = System.Environment.CurrentDirectory + @"\user\configs";
+            basepath = Directory.Exists(basepath) ? basepath : System.Environment.CurrentDirectory;
+            path = $"{basepath}\\user\\mods\\EmuTarkov-AllItemsExamined-1.0.0\\db\\items";
+            transPath = $"{basepath}\\user\\mods\\EmuTarkov-LocaleCh-1.0.0\\db\\locales\\ch\\templates";
+            configPath = $"{basepath}\\user\\configs";
             if (!Directory.Exists(path))
             {
                 if (DialogResult.OK == fbd.ShowDialog())
@@ -65,8 +80,17 @@ namespace ItemEdit
                     enquesttransPath = Path.Combine(basepath, enquesttransPath);
                     orgLocalePath = Path.Combine(basepath, orgLocalePath);
                 }
+                else
+                {
+                    this.Close();
+                    return;
+                }
             }
 
+            txt_base_path.Text = basepath;
+            sysConfig.DefaultPath = basepath;
+            var cng = JsonConvert.SerializeObject(sysConfig);
+            File.WriteAllText("config.json", cng, Encoding.UTF8);
             if (!Directory.Exists(path))
             {
                 goto redo;
@@ -170,6 +194,30 @@ namespace ItemEdit
             if (File.Exists(orgLocalePath))
             {
                 propLocale = JsonConvert.DeserializeObject<PropLocale>(File.ReadAllText(orgLocalePath));
+            }
+
+            moddir = Path.Combine(basepath, moddir);
+            if (Directory.Exists(moddir))
+            {
+                var dirs = Directory.GetDirectories(moddir);
+                cbx_modlist.BeginUpdate();
+                foreach (var dir in dirs)
+                {
+
+                    string config = Path.Combine(dir, "mod.config.json");
+                    if (File.Exists(config))
+                    {
+                        string tempfile = File.ReadAllText(config);
+                        ModsConfigJson configJson = JsonConvert.DeserializeObject<ModsConfigJson>(tempfile);
+                        mods.Add(configJson.name, configJson);
+                        cbx_modlist.Items.Add(new {configJson.name, value = config, cdir = dir});
+                    }
+                    
+                }
+
+                cbx_modlist.DisplayMember = "name";
+                cbx_modlist.ValueMember = "value";
+                cbx_modlist.EndUpdate();
             }
         }
 
@@ -487,6 +535,95 @@ namespace ItemEdit
 
         private void Main_MouseHover(object sender, EventArgs e)
         {
+        }
+
+        private void cb_items_list_SelectedIndexChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void btn_sel_base_path_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            if (fbd.ShowDialog() == DialogResult.OK)
+            {
+                txt_base_path.Text = fbd.SelectedPath;
+            }
+        }
+
+        private void btn_sel_dis_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            fbd.SelectedPath = basepath;
+            if (fbd.ShowDialog() == DialogResult.OK)
+            {
+                txt_dis_path.Text = fbd.SelectedPath;
+            }
+        }
+
+        private void btn_copy_Click(object sender, EventArgs e)
+        {
+            string basepath = txt_base_path.Text;
+            string dispath = txt_dis_path.Text;
+            string abspath = txt_abs_path_list.Text;
+            string[] abspaths = abspath.Split(new[] {'\r','\n'}, StringSplitOptions.RemoveEmptyEntries);
+            abspaths.AsParallel().ForAll((src) =>
+            {
+                string tempp = Path.Combine(basepath, src);
+                string filename = src.Split(new[] {'\\'}).Last();
+                string temdp = Path.Combine(dispath, filename);
+                if (File.Exists(tempp))
+                {
+                    if (Directory.Exists(dispath))
+                    {
+                        File.Copy(tempp, temdp);
+                    }
+                }
+            });
+        }
+
+        private void btnSaveMod_Click(object sender, EventArgs e)
+        {
+            var item = cbx_modlist.SelectedItem as dynamic;
+            if (item != null && item.name != null)
+            {
+                var modName = item.name;
+                var txt = nud_MaxStackCount.Text;
+                var max = int.Parse(txt);
+                var cdir = item.cdir;
+                if (max > 0)
+                {
+                    ModsConfigJson conf = mods[modName];
+                    if (conf.db.ContainsKey("items"))
+                    {
+                        foreach (var itemKey in conf.db["items"])
+                        {
+                            
+                            var tmp = Path.Combine(cdir, itemKey.Value.ToString());
+                            string tmpCtx = File.ReadAllText(tmp);
+                            Dictionary<string, object> itemObj =
+                                JsonConvert.DeserializeObject<Dictionary<string, object>>(tmpCtx);
+                            var jo = itemObj["_props"] as JObject;
+                            jo["StackMaxSize"] = max;
+                            itemObj["_props"] = jo;
+                            tmpCtx = JsonConvert.SerializeObject(itemObj);
+                            File.WriteAllText(tmp, tmpCtx, Encoding.UTF8);
+
+                        }
+
+                        MessageBox.Show("ok");
+                    } 
+                }
+            }
+        }
+
+        private void btn_clear_cache_Click(object sender, EventArgs e)
+        {
+            string cachepath = Path.Combine(basepath, @"user\cache");
+            if (Directory.Exists(cachepath))
+            {
+                Directory.Delete(cachepath, true);
+                MessageBox.Show("delete ok");
+            }
         }
     }
 }

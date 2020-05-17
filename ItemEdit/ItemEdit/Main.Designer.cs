@@ -49,16 +49,33 @@
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tab_UserProfile = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.lbl_codition = new System.Windows.Forms.Label();
+            this.lbltaskdesc = new System.Windows.Forms.Label();
+            this.lblTaskName = new System.Windows.Forms.Label();
             this.List_Task = new System.Windows.Forms.ListBox();
             this.Tab_System = new System.Windows.Forms.TabPage();
+            this.tab_items = new System.Windows.Forms.TabPage();
+            this.lbl_type_name = new System.Windows.Forms.Label();
+            this.cb_items_list = new System.Windows.Forms.ComboBox();
+            this.DGV_Items = new System.Windows.Forms.DataGridView();
+            this.tab_copy = new System.Windows.Forms.TabPage();
+            this.btn_copy = new System.Windows.Forms.Button();
+            this.btn_sel_dis = new System.Windows.Forms.Button();
+            this.btn_sel_base_path = new System.Windows.Forms.Button();
+            this.txt_dis_path = new System.Windows.Forms.TextBox();
+            this.txt_base_path = new System.Windows.Forms.TextBox();
+            this.txt_abs_path_list = new System.Windows.Forms.TextBox();
+            this.tab_mods = new System.Windows.Forms.TabPage();
+            this.btnSaveMod = new System.Windows.Forms.Button();
+            this.lblMaxStackCount = new System.Windows.Forms.Label();
+            this.nud_MaxStackCount = new System.Windows.Forms.NumericUpDown();
+            this.cbx_modlist = new System.Windows.Forms.ComboBox();
             this.CMS_ListTask = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.TSMI_avaviableforsuccess = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMI_Success = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMI_Cancel = new System.Windows.Forms.ToolStripMenuItem();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.lblTaskName = new System.Windows.Forms.Label();
-            this.lbltaskdesc = new System.Windows.Forms.Label();
-            this.lbl_codition = new System.Windows.Forms.Label();
+            this.btn_clear_cache = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -68,9 +85,14 @@
             this.tabControl2.SuspendLayout();
             this.tab_UserProfile.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.Tab_System.SuspendLayout();
-            this.CMS_ListTask.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.Tab_System.SuspendLayout();
+            this.tab_items.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DGV_Items)).BeginInit();
+            this.tab_copy.SuspendLayout();
+            this.tab_mods.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_MaxStackCount)).BeginInit();
+            this.CMS_ListTask.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBox1
@@ -96,7 +118,7 @@
             this.listBox1.ItemHeight = 12;
             this.listBox1.Location = new System.Drawing.Point(3, 52);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(650, 196);
+            this.listBox1.Size = new System.Drawing.Size(969, 580);
             this.listBox1.TabIndex = 2;
             this.listBox1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseDoubleClick);
             // 
@@ -236,6 +258,9 @@
             // 
             this.tabControl2.Controls.Add(this.tab_UserProfile);
             this.tabControl2.Controls.Add(this.Tab_System);
+            this.tabControl2.Controls.Add(this.tab_items);
+            this.tabControl2.Controls.Add(this.tab_copy);
+            this.tabControl2.Controls.Add(this.tab_mods);
             this.tabControl2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl2.Location = new System.Drawing.Point(0, 0);
             this.tabControl2.Name = "tabControl2";
@@ -268,6 +293,38 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "任务";
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.lbl_codition);
+            this.panel1.Controls.Add(this.lbltaskdesc);
+            this.panel1.Controls.Add(this.lblTaskName);
+            this.panel1.Location = new System.Drawing.Point(217, 17);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(415, 581);
+            this.panel1.TabIndex = 12;
+            // 
+            // lbl_codition
+            // 
+            this.lbl_codition.Location = new System.Drawing.Point(3, 348);
+            this.lbl_codition.Name = "lbl_codition";
+            this.lbl_codition.Size = new System.Drawing.Size(409, 233);
+            this.lbl_codition.TabIndex = 2;
+            // 
+            // lbltaskdesc
+            // 
+            this.lbltaskdesc.Location = new System.Drawing.Point(3, 50);
+            this.lbltaskdesc.Name = "lbltaskdesc";
+            this.lbltaskdesc.Size = new System.Drawing.Size(409, 298);
+            this.lbltaskdesc.TabIndex = 1;
+            // 
+            // lblTaskName
+            // 
+            this.lblTaskName.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblTaskName.Location = new System.Drawing.Point(0, 0);
+            this.lblTaskName.Name = "lblTaskName";
+            this.lblTaskName.Size = new System.Drawing.Size(415, 23);
+            this.lblTaskName.TabIndex = 0;
+            // 
             // List_Task
             // 
             this.List_Task.ItemHeight = 12;
@@ -289,6 +346,173 @@
             this.Tab_System.TabIndex = 1;
             this.Tab_System.Text = "系统设置";
             this.Tab_System.UseVisualStyleBackColor = true;
+            // 
+            // tab_items
+            // 
+            this.tab_items.Controls.Add(this.lbl_type_name);
+            this.tab_items.Controls.Add(this.cb_items_list);
+            this.tab_items.Controls.Add(this.DGV_Items);
+            this.tab_items.Location = new System.Drawing.Point(4, 22);
+            this.tab_items.Name = "tab_items";
+            this.tab_items.Padding = new System.Windows.Forms.Padding(3);
+            this.tab_items.Size = new System.Drawing.Size(992, 670);
+            this.tab_items.TabIndex = 2;
+            this.tab_items.Text = "物品数据库";
+            this.tab_items.UseVisualStyleBackColor = true;
+            // 
+            // lbl_type_name
+            // 
+            this.lbl_type_name.AutoSize = true;
+            this.lbl_type_name.Location = new System.Drawing.Point(8, 9);
+            this.lbl_type_name.Name = "lbl_type_name";
+            this.lbl_type_name.Size = new System.Drawing.Size(29, 12);
+            this.lbl_type_name.TabIndex = 2;
+            this.lbl_type_name.Text = "类型";
+            // 
+            // cb_items_list
+            // 
+            this.cb_items_list.FormattingEnabled = true;
+            this.cb_items_list.Location = new System.Drawing.Point(43, 6);
+            this.cb_items_list.Name = "cb_items_list";
+            this.cb_items_list.Size = new System.Drawing.Size(193, 20);
+            this.cb_items_list.TabIndex = 1;
+            this.cb_items_list.SelectedIndexChanged += new System.EventHandler(this.cb_items_list_SelectedIndexChanged);
+            // 
+            // DGV_Items
+            // 
+            this.DGV_Items.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DGV_Items.Location = new System.Drawing.Point(8, 32);
+            this.DGV_Items.Name = "DGV_Items";
+            this.DGV_Items.RowTemplate.Height = 23;
+            this.DGV_Items.Size = new System.Drawing.Size(981, 638);
+            this.DGV_Items.TabIndex = 0;
+            // 
+            // tab_copy
+            // 
+            this.tab_copy.Controls.Add(this.btn_copy);
+            this.tab_copy.Controls.Add(this.btn_sel_dis);
+            this.tab_copy.Controls.Add(this.btn_sel_base_path);
+            this.tab_copy.Controls.Add(this.txt_dis_path);
+            this.tab_copy.Controls.Add(this.txt_base_path);
+            this.tab_copy.Controls.Add(this.txt_abs_path_list);
+            this.tab_copy.Location = new System.Drawing.Point(4, 22);
+            this.tab_copy.Name = "tab_copy";
+            this.tab_copy.Padding = new System.Windows.Forms.Padding(3);
+            this.tab_copy.Size = new System.Drawing.Size(992, 670);
+            this.tab_copy.TabIndex = 3;
+            this.tab_copy.Text = "批量拷贝";
+            this.tab_copy.UseVisualStyleBackColor = true;
+            // 
+            // btn_copy
+            // 
+            this.btn_copy.Location = new System.Drawing.Point(894, 340);
+            this.btn_copy.Name = "btn_copy";
+            this.btn_copy.Size = new System.Drawing.Size(75, 23);
+            this.btn_copy.TabIndex = 5;
+            this.btn_copy.Text = "拷贝";
+            this.btn_copy.UseVisualStyleBackColor = true;
+            this.btn_copy.Click += new System.EventHandler(this.btn_copy_Click);
+            // 
+            // btn_sel_dis
+            // 
+            this.btn_sel_dis.Location = new System.Drawing.Point(894, 311);
+            this.btn_sel_dis.Name = "btn_sel_dis";
+            this.btn_sel_dis.Size = new System.Drawing.Size(75, 23);
+            this.btn_sel_dis.TabIndex = 4;
+            this.btn_sel_dis.Text = "目标路径";
+            this.btn_sel_dis.UseVisualStyleBackColor = true;
+            this.btn_sel_dis.Click += new System.EventHandler(this.btn_sel_dis_Click);
+            // 
+            // btn_sel_base_path
+            // 
+            this.btn_sel_base_path.Location = new System.Drawing.Point(233, 311);
+            this.btn_sel_base_path.Name = "btn_sel_base_path";
+            this.btn_sel_base_path.Size = new System.Drawing.Size(75, 23);
+            this.btn_sel_base_path.TabIndex = 3;
+            this.btn_sel_base_path.Text = "根路径";
+            this.btn_sel_base_path.UseVisualStyleBackColor = true;
+            this.btn_sel_base_path.Click += new System.EventHandler(this.btn_sel_base_path_Click);
+            // 
+            // txt_dis_path
+            // 
+            this.txt_dis_path.Location = new System.Drawing.Point(691, 311);
+            this.txt_dis_path.Name = "txt_dis_path";
+            this.txt_dis_path.ReadOnly = true;
+            this.txt_dis_path.Size = new System.Drawing.Size(196, 21);
+            this.txt_dis_path.TabIndex = 2;
+            // 
+            // txt_base_path
+            // 
+            this.txt_base_path.Location = new System.Drawing.Point(3, 311);
+            this.txt_base_path.Name = "txt_base_path";
+            this.txt_base_path.ReadOnly = true;
+            this.txt_base_path.Size = new System.Drawing.Size(224, 21);
+            this.txt_base_path.TabIndex = 1;
+            // 
+            // txt_abs_path_list
+            // 
+            this.txt_abs_path_list.Location = new System.Drawing.Point(325, 0);
+            this.txt_abs_path_list.MaxLength = 3276700;
+            this.txt_abs_path_list.Multiline = true;
+            this.txt_abs_path_list.Name = "txt_abs_path_list";
+            this.txt_abs_path_list.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txt_abs_path_list.Size = new System.Drawing.Size(360, 670);
+            this.txt_abs_path_list.TabIndex = 0;
+            // 
+            // tab_mods
+            // 
+            this.tab_mods.Controls.Add(this.btn_clear_cache);
+            this.tab_mods.Controls.Add(this.btnSaveMod);
+            this.tab_mods.Controls.Add(this.lblMaxStackCount);
+            this.tab_mods.Controls.Add(this.nud_MaxStackCount);
+            this.tab_mods.Controls.Add(this.cbx_modlist);
+            this.tab_mods.Location = new System.Drawing.Point(4, 22);
+            this.tab_mods.Name = "tab_mods";
+            this.tab_mods.Padding = new System.Windows.Forms.Padding(3);
+            this.tab_mods.Size = new System.Drawing.Size(992, 670);
+            this.tab_mods.TabIndex = 4;
+            this.tab_mods.Text = "Mods";
+            this.tab_mods.UseVisualStyleBackColor = true;
+            // 
+            // btnSaveMod
+            // 
+            this.btnSaveMod.Location = new System.Drawing.Point(217, 87);
+            this.btnSaveMod.Name = "btnSaveMod";
+            this.btnSaveMod.Size = new System.Drawing.Size(75, 23);
+            this.btnSaveMod.TabIndex = 3;
+            this.btnSaveMod.Text = "保存";
+            this.btnSaveMod.UseVisualStyleBackColor = true;
+            this.btnSaveMod.Click += new System.EventHandler(this.btnSaveMod_Click);
+            // 
+            // lblMaxStackCount
+            // 
+            this.lblMaxStackCount.AutoSize = true;
+            this.lblMaxStackCount.Location = new System.Drawing.Point(8, 90);
+            this.lblMaxStackCount.Name = "lblMaxStackCount";
+            this.lblMaxStackCount.Size = new System.Drawing.Size(77, 12);
+            this.lblMaxStackCount.TabIndex = 2;
+            this.lblMaxStackCount.Text = "弹药堆叠数量";
+            // 
+            // nud_MaxStackCount
+            // 
+            this.nud_MaxStackCount.Location = new System.Drawing.Point(91, 87);
+            this.nud_MaxStackCount.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.nud_MaxStackCount.Name = "nud_MaxStackCount";
+            this.nud_MaxStackCount.Size = new System.Drawing.Size(120, 21);
+            this.nud_MaxStackCount.TabIndex = 1;
+            // 
+            // cbx_modlist
+            // 
+            this.cbx_modlist.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbx_modlist.FormattingEnabled = true;
+            this.cbx_modlist.Location = new System.Drawing.Point(6, 3);
+            this.cbx_modlist.Name = "cbx_modlist";
+            this.cbx_modlist.Size = new System.Drawing.Size(426, 20);
+            this.cbx_modlist.TabIndex = 0;
             // 
             // CMS_ListTask
             // 
@@ -320,37 +544,15 @@
             this.TSMI_Cancel.Text = "取消";
             this.TSMI_Cancel.Click += new System.EventHandler(this.TSMI_Cancel_Click);
             // 
-            // panel1
+            // btn_clear_cache
             // 
-            this.panel1.Controls.Add(this.lbl_codition);
-            this.panel1.Controls.Add(this.lbltaskdesc);
-            this.panel1.Controls.Add(this.lblTaskName);
-            this.panel1.Location = new System.Drawing.Point(217, 17);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(415, 581);
-            this.panel1.TabIndex = 12;
-            // 
-            // lblTaskName
-            // 
-            this.lblTaskName.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblTaskName.Location = new System.Drawing.Point(0, 0);
-            this.lblTaskName.Name = "lblTaskName";
-            this.lblTaskName.Size = new System.Drawing.Size(415, 23);
-            this.lblTaskName.TabIndex = 0;
-            // 
-            // lbltaskdesc
-            // 
-            this.lbltaskdesc.Location = new System.Drawing.Point(3, 50);
-            this.lbltaskdesc.Name = "lbltaskdesc";
-            this.lbltaskdesc.Size = new System.Drawing.Size(409, 298);
-            this.lbltaskdesc.TabIndex = 1;
-            // 
-            // lbl_codition
-            // 
-            this.lbl_codition.Location = new System.Drawing.Point(3, 348);
-            this.lbl_codition.Name = "lbl_codition";
-            this.lbl_codition.Size = new System.Drawing.Size(409, 233);
-            this.lbl_codition.TabIndex = 2;
+            this.btn_clear_cache.Location = new System.Drawing.Point(517, 7);
+            this.btn_clear_cache.Name = "btn_clear_cache";
+            this.btn_clear_cache.Size = new System.Drawing.Size(75, 23);
+            this.btn_clear_cache.TabIndex = 4;
+            this.btn_clear_cache.Text = "清除缓存";
+            this.btn_clear_cache.UseVisualStyleBackColor = true;
+            this.btn_clear_cache.Click += new System.EventHandler(this.btn_clear_cache_Click);
             // 
             // Main
             // 
@@ -377,9 +579,17 @@
             this.tab_UserProfile.ResumeLayout(false);
             this.tab_UserProfile.PerformLayout();
             this.groupBox2.ResumeLayout(false);
-            this.Tab_System.ResumeLayout(false);
-            this.CMS_ListTask.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
+            this.Tab_System.ResumeLayout(false);
+            this.tab_items.ResumeLayout(false);
+            this.tab_items.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DGV_Items)).EndInit();
+            this.tab_copy.ResumeLayout(false);
+            this.tab_copy.PerformLayout();
+            this.tab_mods.ResumeLayout(false);
+            this.tab_mods.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_MaxStackCount)).EndInit();
+            this.CMS_ListTask.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -415,6 +625,23 @@
         private System.Windows.Forms.Label lblTaskName;
         private System.Windows.Forms.Label lbltaskdesc;
         private System.Windows.Forms.Label lbl_codition;
+        private System.Windows.Forms.TabPage tab_items;
+        private System.Windows.Forms.DataGridView DGV_Items;
+        private System.Windows.Forms.ComboBox cb_items_list;
+        private System.Windows.Forms.Label lbl_type_name;
+        private System.Windows.Forms.TabPage tab_copy;
+        private System.Windows.Forms.Button btn_sel_dis;
+        private System.Windows.Forms.Button btn_sel_base_path;
+        private System.Windows.Forms.TextBox txt_dis_path;
+        private System.Windows.Forms.TextBox txt_base_path;
+        private System.Windows.Forms.TextBox txt_abs_path_list;
+        private System.Windows.Forms.Button btn_copy;
+        private System.Windows.Forms.TabPage tab_mods;
+        private System.Windows.Forms.ComboBox cbx_modlist;
+        private System.Windows.Forms.Label lblMaxStackCount;
+        private System.Windows.Forms.NumericUpDown nud_MaxStackCount;
+        private System.Windows.Forms.Button btnSaveMod;
+        private System.Windows.Forms.Button btn_clear_cache;
     }
 }
 
